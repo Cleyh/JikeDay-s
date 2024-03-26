@@ -1,9 +1,9 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-weight: normal;
 }
 
@@ -21,15 +21,25 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 415px) and (max-width: 2000px) {
+  #app {
+    margin: 0 auto; /* Centers the app */
+    max-width: 2000px; /* Maximum width of the content for medium screens */
+  }
+}
+
+/* This will adjust the layout for larger screens, e.g., iPads, desktops */
+@media (min-width: 897px) {
   body {
     display: flex;
     place-items: center;
+    height: 100%; /* Makes the body take full viewport height */
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better focus */
+    max-width: 80%; /* or you could use a fixed max-width like 1280px as in your previous rule */
+    padding: 2rem;
+    margin: auto;
   }
 }

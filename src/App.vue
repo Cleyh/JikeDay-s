@@ -3,13 +3,12 @@ import HelloWorld from './components/HelloWorld.vue'
 import Home from "@/pages/Home.vue";
 import ButtomBar from "@/components/ButtomBar.vue";
 import Profile from "@/pages/Profile.vue";
+import SubSource from "@/pages/SubSource.vue";
 </script>
 
 <template>
   <main>
-    <Home />
-    hello
-    <Profile/>
+  <SubSource/>
   </main>
   <ButtomBar />
 </template>
