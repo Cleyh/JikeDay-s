@@ -8,6 +8,7 @@ import Profile from "@/pages/Profile.vue";
 <template>
   <main>
     <Home />
+    hello
     <Profile/>
   </main>
   <ButtomBar />
