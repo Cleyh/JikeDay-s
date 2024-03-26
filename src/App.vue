@@ -7,10 +7,11 @@ import Profile from "@/pages/Profile.vue";
 
 <template>
   <main>
-    <Home />
-    <Profile/>
+    <div class="container">
+      <Home />
+    </div>
   </main>
-  <ButtomBar />
+    <ButtomBar/>
 </template>
 
 <style scoped>
