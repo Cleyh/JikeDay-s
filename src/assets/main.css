@@ -21,25 +21,36 @@ a,
   }
 }
 
-@media (min-width: 415px) and (max-width: 896px) {
+@media (min-width: 100px) and (max-width: 800px) {
   #app {
     margin: 0 auto; /* Centers the app */
-    max-width: 896px; /* Maximum width of the content for medium screens */
+    max-width: 800px; /* Maximum width of the content for medium screens */
   }
 }
 
 /* This will adjust the layout for larger screens, e.g., iPads, desktops */
-@media (min-width: 897px) {
+@media (min-width: 801px) {
   body {
     display: flex;
-    place-items: center;
+    justify-content: center; /* 水平居中 */
+    align-items: stretch;
+    /* align-items: flex-start; /* 顶部对齐 */
     height: 100vh; /* Makes the body take full viewport height */
+    margin: 0; /* 移除默认的margin */
+    padding: 0; /* 移除默认的padding */
   }
 
   #app {
+    display: flex; /* 同样使用flex布局 */
+    flex-direction: column; /* 垂直排列子元素 */
+    justify-content: flex-start; /* 从顶部开始排列内容，确保内容按顺序展现 */
+    align-items: center; /* 子元素水平居中 */
+    height: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better focus */
-    max-width: 80%; /* or you could use a fixed max-width like 1280px as in your previous rule */
-    padding: 2rem;
-    margin: auto;
+    /* max-width: 100%; /* or you could use a fixed max-width like 1280px as in your previous rule */
+    max-width: 420px;
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem auto;
   }
 }
