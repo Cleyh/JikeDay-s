@@ -1,6 +1,6 @@
 # jike-days
 
-This template should help get you started developing with Vue 3 in Vite.
+Software Engineering Course ‘s Group Assignment. This app is a calendar-based subscription-based reading app that allows users to customize their calendars by subscribing to feeds, either from subscribable items provided in the app or designed and created by the users themselves.
 
 ## Recommended IDE Setup
 
