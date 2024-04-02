@@ -34,12 +34,15 @@ export default {
   methods: {
     goToHomePage() {
       // 跳转到主页的逻辑
+  this.$router.push({name:'home'})
     },
     goToSubscription() {
       // 跳转到订阅源的逻辑
+      this.$router.push({ name: 'subscription' }); // 通过路由名称导航
     },
     goToProfile() {
       // 跳转到个人中心的逻辑
+      this.$router.push({ name: 'profile' }); // 通过路由名称导航
     },
     // ... goTo methods ...
     updateNavWidth() {
