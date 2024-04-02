@@ -1,17 +1,18 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import Home from "@/pages/Home.vue";
-//import ButtomBar from "@/components/ButtomBar.vue";
+import ButtomBar from "@/components/ButtomBar.vue";
 import Profile from "@/pages/Profile.vue";
-import Settings from "@/pages/Settings.vue";
-import SubSource from "@/pages/SubSource.vue";
 </script>
 
 <template>
   <main>
-    <profile/>
+    <div class="container">
+      <Home />
+      <ButtomBar/>
+
+    </div>
   </main>
-  <ButtomBar />
 </template>
 
 <style scoped>
@@ -24,6 +25,7 @@ header {
   margin: 0 auto 2rem;
 }
 
+/*
 @media (min-width: 1024px) {
   header {
     display: flex;
@@ -40,5 +42,5 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
-}
+}*/
 </style>
