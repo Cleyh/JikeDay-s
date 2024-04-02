@@ -1,7 +1,11 @@
 <template>
   <div class="profile">
     <!-- 引入个人信息卡片 -->
-    <ProfileCard :avatarUrl="userInfo.avatarUrl" :nickname="userInfo.nickname" :userId="userInfo.userId" />
+    <div class="profile-card">
+      <ProfileCard :avatarUrl="userInfo.avatarUrl" :nickname="userInfo.nickname" :userId="userInfo.userId" />
+    </div>
+    <button @click="switchUser">切换用户</button>
+    <button @click="logout">退出登录</button>
   </div>
 </template>
 
@@ -13,22 +17,28 @@ export default {
     ProfileCard
   },
   props: {
-    userInfo: { // 定义userInfo作为props接收后端传来的个人信息对象
+    userInfo: {
       type: Object,
-      default: () => ({ // 定义默认值为一个包含默认头像URL、昵称和用户ID的对象
+      default: () => ({
         avatarUrl: 'default-avatar.jpg',
         nickname: 'Guest',
         userId: '0000'
       })
     }
   },
-  // 数据和方法
+  methods: {
+    switchUser() {
+      // 在这里编写切换用户的逻辑，可以调用后端接口获取新用户信息等
+      console.log('Switching user...');
+    },
+    logout() {
+      // 在这里编写退出登录的逻辑，可以清除用户信息等
+      console.log('Logging out...');
+    }
+  }
 };
 </script>
 
 <style scoped>
-/* 样式 */
-.profile {
-  /* 可以添加更多的样式来美化个人信息卡片容器 */
-}
+
 </style>
