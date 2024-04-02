@@ -13,7 +13,7 @@ import SubSource from "@/pages/SubSource.vue";
 <template>
   <main>
     <div class="container">
-      <router-view/>
+      <Home />
       <ButtomBar/>
 
     </div>
