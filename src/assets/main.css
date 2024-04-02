@@ -21,10 +21,10 @@ a,
   }
 }
 
-@media (min-width: 415px) and (max-width: 2000px) {
+@media (min-width: 415px) and (max-width: 896px) {
   #app {
     margin: 0 auto; /* Centers the app */
-    max-width: 2000px; /* Maximum width of the content for medium screens */
+    max-width: 896px; /* Maximum width of the content for medium screens */
   }
 }
 
@@ -33,7 +33,7 @@ a,
   body {
     display: flex;
     place-items: center;
-    height: 100%; /* Makes the body take full viewport height */
+    height: 100vh; /* Makes the body take full viewport height */
   }
 
   #app {
