@@ -3,17 +3,22 @@ import HelloWorld from './components/HelloWorld.vue'
 import Home from "@/pages/Home.vue";
 import ButtomBar from "@/components/ButtomBar.vue";
 import Profile from "@/pages/Profile.vue";
+<<<<<<<<< Temporary merge branch 1
+import Settings from "@/pages/Settings.vue";
+import SubSource from "@/pages/SubSource.vue";
+=========
 import SubSource from "@/pages/SubSource.vue";
 
 
 
 
+>>>>>>>>> Temporary merge branch 2
 </script>
 
 <template>
   <main>
     <div class="container">
-      <Home />
+      <router-view/>
       <ButtomBar/>
 
     </div>
