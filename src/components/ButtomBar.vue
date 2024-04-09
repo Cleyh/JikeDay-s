@@ -38,8 +38,13 @@ export default {
     },
     goToSubscription() {
       // 跳转到订阅源的逻辑
-      this.$router.push({ name: 'subscription' }); // 通过路由名称导航
+      this.$router.push({ name: 'subscription' });
+
     },
+
+
+
+
     goToProfile() {
       // 跳转到个人中心的逻辑
       this.$router.push({ name: 'profile' }); // 通过路由名称导航
