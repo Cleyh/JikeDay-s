@@ -31,7 +31,7 @@ import subSource from "@/pages/SubSource.vue";
 const showLogoutModal = ref(false);
 
 const goToAccountManagement = () => {
-  // 导航到账号管理页面的逻辑，可以使用Vue Router等导航工具
+  // 导航到账号管理页面的逻辑
   console.log(subSource);
 };
 
