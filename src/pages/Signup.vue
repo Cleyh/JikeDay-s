@@ -24,6 +24,7 @@
 export default {
   data() {
     return {
+      username: '',  // 添加用户名字段
       email: '',
       password: '',
       errorMessage: ''
@@ -32,25 +33,36 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        // 这里假设你有一个API端点来处理注册请求
-        // 你可能需要替换为你的实际API端点
-        const response = await this.$http.post('/api/register', {
-          email: this.email,
-          password: this.password
+        let response = await fetch('http://localhost:8080/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.email,  // 添加用户名
+            email: this.email,
+            password: this.password
+          })
         });
 
-        // 处理响应...比如跳转到登录页面或者显示成功消息
-        if (response.data.success) {
-          this.$router.push('/login'); // 假设你有一个登录页面
+        if (response.ok) {
+          let data = await response.json();
+
+          // let data = await response.text();
+          // alert(data);
+
+        } else {
+          this.errorMessage = '注册失败';
         }
       } catch (error) {
-        // 处理错误...比如显示错误消息
-        this.errorMessage = '注册失败，请检查您的输入或稍后重试。';
+        this.errorMessage = '网络错误，请稍后再试';
       }
     }
   }
 };
 </script>
+
+
 
 <style scoped>
 .background-container {

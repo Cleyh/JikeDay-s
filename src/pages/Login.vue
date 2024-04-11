@@ -29,18 +29,40 @@
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      email: '',
+      password: '',
+      errorMessage: ''
     };
   },
   methods: {
-    handleSubmit() {
-      // 登录逻辑
-      console.log('Logging in with:', this.username, this.password);
+    async handleSubmit() {
+      try {
+        let response = await fetch('http://localhost:8088/helloworld', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password
+          })
+        });
+
+        if (response.ok) {
+          let data = await response.json();
+          // 这里处理服务器返回的数据
+          console.log(data);
+        } else {
+          this.errorMessage = '注册失败，请重试';
+        }
+      } catch (error) {
+        this.errorMessage = '网络错误，请稍后再试';
+      }
     }
   }
 };
 </script>
+
 
 <style scoped>
 .login-container {
