@@ -8,9 +8,18 @@
           <input type="email" id="email" v-model="email" required>
         </div>
         <div class="input-field">
+          <label for="username">用户名:</label>
+          <input type="text" id="username" v-model="username" required>
+        </div>
+        <div class="input-field">
           <label for="password">密码:</label>
           <input type="password" id="password" v-model="password" required>
         </div>
+<!--        <div class="input-field">-->
+<!--          <label for="captcha">验证码:</label>-->
+<!--          <input type="text" id="captcha" v-model="captcha" required>-->
+<!--          <img :src="captchaImage" @click="refreshCaptcha" alt="验证码" class="captcha-image">-->
+<!--        </div>-->
         <button type="submit" class="submit-button">注册</button>
       </form>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -18,53 +27,60 @@
   </div>
 </template>
 
-
-
 <script>
 export default {
   data() {
     return {
-      username: '',  // 添加用户名字段
       email: '',
+      username: '', // 新增的用户名字段
       password: '',
+      // captcha: '',
+      // captchaImage: '/path/to/captcha/image',
       errorMessage: ''
     };
   },
   methods: {
     async handleSubmit() {
-      try {
+      try{
         let response = await fetch('http://localhost:8080/user/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            username: this.email,  // 添加用户名
             email: this.email,
+            username: this.username, // 包含新增的用户名字段
             password: this.password
           })
         });
 
         if (response.ok) {
           let data = await response.json();
-
-          // let data = await response.text();
-          // alert(data);
-
+          this.$router.push('/login');
+          // 处理注册成功的情况
         } else {
           this.errorMessage = '注册失败';
         }
       } catch (error) {
         this.errorMessage = '网络错误，请稍后再试';
       }
+    },
+    refreshCaptcha() {
+      // 由于后端还没有这个方法，所以暂时搁置
+      // fetch('/path/to/captcha/refresh')
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       this.captchaImage = data.captchaImage;
+      //     });
     }
   }
 };
 </script>
 
-
-
 <style scoped>
+/*.captcha-image {
+//  cursor: pointer;
+}*/
 .background-container {
   display: flex;
   flex-direction: column;

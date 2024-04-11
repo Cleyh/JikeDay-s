@@ -6,12 +6,15 @@
     <div class="login-form">
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <label for="username">用户名:</label>
-          <input type="text" id="username" v-model="username" required placeholder="请输入用户名">
+          <label for="email">邮箱:</label>
+          <input type="email" id="email" v-model="email" required placeholder="请输入邮箱地址">
         </div>
         <div class="form-group">
           <label for="password">密码:</label>
           <input type="password" id="password" v-model="password" required placeholder="请输入密码">
+        </div>
+        <div class="form-group">
+          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         </div>
         <div class="login-container_2">
           <button type="submit" class="login-button">登录</button>
@@ -37,7 +40,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        let response = await fetch('http://localhost:8088/helloworld', {
+        let response = await fetch('http://localhost:8088/user/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -48,16 +51,33 @@ export default {
           })
         });
 
-        if (response.ok) {
-          let data = await response.json();
-          // 这里处理服务器返回的数据
-          console.log(data);
+        if (!response.ok) {
+          this.errorMessage = '登录失败，请检查您的凭据';
         } else {
-          this.errorMessage = '注册失败，请重试';
+          let data = await response.json();
+          if (data.status === 'success') {
+            //  token 的存储和后续操作
+            this.handleLoginSuccess(data);
+          } else {
+            this.errorMessage = data.message || '登录失败，请稍后再试';
+          }
         }
       } catch (error) {
-        this.errorMessage = '网络错误，请稍后再试';
+        // 处理网络错误或其他错误
+        this.errorMessage = '发生错误，请检查您的网络连接';
+        console.error('登录时发生错误:', error);
       }
+    },
+    handleLoginSuccess(data) {
+      // 存储 token 或其他登录信息
+      // this.saveToken(data.token);
+
+      // 重定向到另一个页面
+      this.$router.push('/profile');
+    },
+    handleForgotPassword() {
+      // 处理忘记密码的逻辑
+      console.log('处理忘记密码功能');
     }
   }
 };
