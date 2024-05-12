@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../pages/Home.vue';
-import SubscriptionPage from '../pages/SubSource.vue';
-import ProfilePage from '../pages/Profile.vue';
-import Login from "@/pages/Login.vue";
-import store from "@/components/store/store.js";
-import Signup from '../pages/Signup.vue'
+import HomePage from '@/views/home/Home.vue';
+import SubscriptionPage from '@/views/SubSource.vue';
+import ProfilePage from '@/views/Profile.vue';
+import Login from "@/views/Login.vue";
+import store from "@/store/store.js";
+import Signup from '@/views/Signup.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
     // 检查目标路由是否需要登录
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-    const isLoggedIn = store.state.isLoggedIn;
+    const isLoggedIn = store.state.auth.isLoggedIn;
 
     if (requiresAuth && !isLoggedIn) {
         // 如果需要登录但用户未登录，重定向到登录页
