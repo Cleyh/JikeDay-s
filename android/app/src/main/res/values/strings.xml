@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">jike-days</string>
+    <string name="title_activity_main">jike-days</string>
+    <string name="package_name">com.jidays.app</string>
+    <string name="custom_url_scheme">com.jidays.app</string>
+</resources>

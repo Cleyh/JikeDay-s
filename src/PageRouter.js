@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../pages/Home.vue';
-import SubscriptionPage from '../pages/SubSource.vue';
-import ProfilePage from '../pages/Profile.vue';
+import HomePage from './pages/Home/Home.vue';
+import SubscriptionPage from './pages/SubSource.vue';
+import ProfilePage from './pages/Profile.vue';
 import Login from "@/pages/Login.vue";
-import store from "@/components/store/store.js";
-import Signup from '../pages/Signup.vue'
+import store from "@/store/store.ts";
+import Signup from './pages/Signup.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
