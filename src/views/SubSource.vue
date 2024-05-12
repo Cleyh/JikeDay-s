@@ -4,25 +4,54 @@
     <input type="text" placeholder="搜索">
     <div class="divider"></div>
     <div class="cards-container">
-    <card v-for="item in items" :key="item.id" :item="item" />
+      <card v-for="item in items" :key="item.id" :item="item" />
     </div>
   </div>
 </template>
 
 <script>
-import Card from "../components/subsource_Page/Card.vue"; // 确保这里的路径是正确的
+import Card from "../components/subsource_Page/Card.vue";
 
 export default {
   components: {
-    Card
+    Card,
   },
+  props: ['items'], // 使用 props 接收订阅项数组
   data() {
     return {
-      items: [
-        { id: 1, title: 'Item 1', content: 'Content for Item 1',likes: 24, comments: 11 },
-        { id: 2, title: 'Item 2', content: 'Content for Item 2' },
-        // 在这里填充更多items数据
-      ]
+      items: [] // 将数据存储在组件的数据属性中
+    }
+  },
+  mounted() {
+    this.goToSubscription(); // 在组件加载后调用获取数据的方法
+  },
+  methods: {
+    goToSubscription() {
+      // 跳转到订阅源的逻辑
+      this.$router.push({ name: 'subscription' });
+      fetch('http://localhost:8080/getSubsource?page=0&size=4', {
+        method: 'GET'
+      })
+          .then(response => {
+            if (response.ok) {
+              return response.json(); // 处理响应的JSON数据
+            }
+            throw new Error('Network response was not ok.');
+          })
+          .then(data => {
+            console.log(data); // 在这里处理服务器返回的数据
+            // 更新数据属性，以在页面上显示订阅信息
+            this.items = data.map(item => ({
+              id: item.sid,
+              title: item.tittle, // 注意：原数据中标题键是`tittle`，这里做了修正
+              content: item.content,
+              likes: 0, // 默认点赞数
+              comments: 0 // 默认评论数
+            }));
+          })
+          .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+          });
     }
   }
 }
