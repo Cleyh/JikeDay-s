@@ -29,7 +29,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -78,7 +77,6 @@ export default {
     },
     handleForgotPassword() {
       // 处理忘记密码的逻辑
-      console.log('Database file copied successfully!');
       console.log('处理忘记密码功能');
     }
   }

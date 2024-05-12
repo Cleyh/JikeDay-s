@@ -1,18 +1,10 @@
 import './assets/main.css';
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './PageRouter.js';
-import store from "@/store/store.ts";
+import router from './router'; // 导入 router
+import store from "@/components/store/store.js";
 import './assets/base.css';
 import './assets/main.css';
-
-// let hostUrl = "http://localhost:8080";
-
-// todo:初始化程序 (加载本地数据)
-
-// todo: 初始化任务
-
-// todo: 加载插件
 
 const app = createApp(App);
 app.use(router);
