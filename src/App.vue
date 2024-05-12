@@ -1,9 +1,9 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
-import Home from "@/pages/Home.vue";
+import Home from "@/views/home/Home.vue";
 import ButtomBar from "@/components/ButtomBar.vue";
-import Profile from "@/pages/Profile.vue";
-import SubSource from "@/pages/SubSource.vue";
+import Profile from "@/views/Profile.vue";
+import SubSource from "@/views/SubSource.vue";
 
 
 

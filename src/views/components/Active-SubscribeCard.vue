@@ -1,36 +1,40 @@
 <template>
-  <div class="news-card">
+  <div class="active-subscribe-card">
+
     <div class="header">
-      <i class="icon message-icon">💬</i>
-      <span class="push-time">{{ news.pushTime }}</span>
+      <h2 class="title">{{ subscribe_message.title }}</h2>
+      <p class="subtitle">{{ formattedSummary }}</p>
     </div>
+
     <div class="content">
-      <h2 class="title">{{ news.title }}</h2>
       <p class="summary">{{ formattedSummary }}</p>
     </div>
+
     <div class="footer">
-      <i class="icon info-icon">ℹ️</i>
-      <div class="icons">
-        <i v-if="news.isReminderSet" class="icon alarm-icon">⏰</i>
-        <i v-if="news.isImportant" class="icon flag-icon">🚩</i>
+      <div class="subsource-info">
+        <i class="icon subsource-icon">💬</i>
+        <span class="push-time">{{ subscribe_message.pushTime }}</span>
       </div>
+      <i class="icon info-icon">ℹ️</i>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'NewsCard',
+  name: 'ActiveSubscribeCard',
   props: {
-    news: {
+    subscribe_message: {
       type: Object,
       required: true
     }
   },
   computed: {
     formattedSummary() {
-      // 假设新闻摘要已经是截断并带有省略号的形式
-      return this.news.summary;
+      if (this.subscribe_message.summary.length > 20) {
+        return this.subscribe_message.summary.slice(0, 20) + '...';
+      }
+      return this.subscribe_message.summary;
     }
   }
 
@@ -38,7 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.news-card {
+.active-subscribe-card {
   padding: 16px;
   background: var(--color-background);
   border-radius: 12px;

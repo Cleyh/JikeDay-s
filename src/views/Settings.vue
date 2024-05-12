@@ -26,7 +26,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import subSource from "@/pages/SubSource.vue";
+import subSource from "@/views/SubSource.vue";
 
 const showLogoutModal = ref(false);
 
