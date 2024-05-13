@@ -1,15 +1,15 @@
 import axios from "axios";
 
 export class ActiveSubsource {
-    id: int;
-    url: string;
+    id = -1;
+    url = "";
     // 一个信息处理函数
-    formatRule: (data: any) => any;
-    updateCycle: string;
+    formatRule = new function(){};
+    updateCycle;
 
-    private rawData: any;
+    rawData = "";
 
-    constructor(url: string, formatRule: (data: any) => any, updateCycle = "day") {
+    constructor(url, formatRule, updateCycle = "day") {
         this.url = url;
         this.formatRule = formatRule;
         this.updateCycle = updateCycle;
@@ -17,7 +17,7 @@ export class ActiveSubsource {
     }
 
     // 从 URL 获取数据
-    async fetchData(): Promise<void> {
+    async fetchData(){
         try {
             const response = await axios.get(this.url);
             this.rawData = response.data;
@@ -28,12 +28,12 @@ export class ActiveSubsource {
     }
 
     // 返回原始数据
-    getRaw(): any {
+    getRaw(){
         return this.rawData;
     }
 
     // 返回格式化后的数据
-    getFormat(): any {
+    getFormat(){
         if (!this.rawData) {
             console.error('No data available. Please fetch data first.');
             return null;
