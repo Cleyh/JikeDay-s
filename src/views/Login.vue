@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import store from "@/store/store.js";
+
 export default {
   data() {
     return {
@@ -70,11 +72,9 @@ export default {
       }
     },
     handleLoginSuccess(data) {
-      // 存储 token 或其他登录信息
-      // this.saveToken(data.token);
-
-      // 重定向到另一个页面
-      this.$router.push('/');
+      this.$store.dispatch('setToken', data.token);
+      this.$store.commit('auth/login');
+      this.$router.push('/profile');
     },
     handleForgotPassword() {
       // 处理忘记密码的逻辑
