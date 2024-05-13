@@ -1,7 +1,3 @@
-import {DataController} from "@/dataController/DataController.js";
-
-const dataController = new DataController();
-
 const globalRepository = {
     namespaced: true,
     state: {

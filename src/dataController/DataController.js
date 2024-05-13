@@ -1,16 +1,15 @@
 import {reactive} from "vue";
-import data from "bootstrap/js/src/dom/data.js";
 import Dexie from "dexie";
 
 class DataController {
 
-    apiUrl: string;
+    apiUrl = "";
     db = new Dexie('JiBataBase');
 
-    subscribes: [];
-    schedules: [];
-    tweets: [];
-    setting: {};
+    subscribes;
+    schedules;
+    tweets;
+    setting;
 
     constructor(apiUrl) {
         this.apiUrl = apiUrl;
@@ -119,7 +118,7 @@ class DataController {
 
     // 从内存读取
 
-    getSubscribe(id: int) {
+    getSubscribe(id) {
         return this.subscribes.find(subscribe => subscribe.id === id);
     }
 
@@ -127,7 +126,7 @@ class DataController {
         return this.subscribes;
     }
 
-    getSchedule(id: int) {
+    getSchedule(id) {
         return this.schedules.find(schedule => schedule.id === id);
     }
 
@@ -135,12 +134,12 @@ class DataController {
         return this.schedules;
     }
 
-    getTweet(id: int) {
+    getTweet(id) {
         return this.tweets.find(tweet => tweet.id === id);
     }
 
     // 读取第pages*int个到pages*int+size个的tweet
-    getTweets(pages: int, size: int) {
+    getTweets(pages, size) {
         return this.tweets.slice(pages * size, pages * size + size);
     }
 
@@ -152,7 +151,7 @@ class DataController {
         return this.user;
     }
 
-    getSetting(id: int) {
+    getSetting(id) {
         return this.setting.find(setting => setting.id === id);
     }
 
@@ -188,7 +187,7 @@ class DataController {
         }
     }
 
-    async addSchedule(schedule: Schedule) {
+    async addSchedule(schedule) {
         try {
             await this.db.schedule_list.add(schedule);
             await this.loadSchedule();
@@ -197,7 +196,7 @@ class DataController {
         }
     }
 
-    async updateSchedule(schedule: Schedule) {
+    async updateSchedule(schedule) {
         try{
             await this.db.schedule_list.put(schedule);
             await this.loadSchedule();
@@ -206,7 +205,7 @@ class DataController {
         }
     }
 
-    async deleteSchedule(id: int) {
+    async deleteSchedule(id) {
         try {
             await this.db.schedule_list.delete(id);
             await this.loadSchedule();
@@ -215,14 +214,14 @@ class DataController {
         }
     }
 
-    async addTweet(tweet: Tweet) {
+    async addTweet(tweet) {
         this.tweets.push(tweet);
         this.db.tweet_list.add(tweet).catch(error => {
             console.error('Error adding tweet to DB:', error);
         });
     }
 
-    async deleteTweet(id: int) {
+    async deleteTweet(id) {
         const index = this.tweets.findIndex(tweet => tweet.id === id);
         if (index !== -1) {
             console.error('Tweet not found');
@@ -240,7 +239,7 @@ class DataController {
         });
     }
 
-    async updateSetting(setting: Setting) {
+    async updateSetting(setting) {
         try {
             await this.db.setting_list.put(setting);
             await this.loadSetting();
@@ -249,7 +248,7 @@ class DataController {
         }
     }
 
-    async updateUser(user: User) {
+    async updateUser(user) {
         try {
             await this.db.user_list.put(user);
             await this.loadUser();
@@ -260,6 +259,6 @@ class DataController {
 
 }
 
-let dataController = new DataController("http://localhost:8080/");
+const dataController = new DataController("http://localhost:8080/");
 
 export default dataController;

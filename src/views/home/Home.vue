@@ -21,19 +21,18 @@ export default {
   },
   data() {
     return {
-      tweets: []
+      currentDate: new Date(),
     }
   },
-  mounted() {
-    this.loadTweets();
-  },
-  methods: {
-    loadTweets() {
-      dataController.getAllTweet().then(tweets => {
-        this.tweets = tweets;
-      });
+  computed: {
+    cards() {
+      return dataController.tweets;
     }
-  }
+  },
+  created() {
+    dataController.loadAllTweet();
+  },
+  methods: {}
 }
 </script>
 
