@@ -2,6 +2,7 @@
 import {ActiveSubsource} from "@/subscript/ActiveSubsource.js";
 import store from "@/store/store.js";
 import dataController from "@/dataController/DataController.js";
+import axios from "axios";
 
 class SubscriptManager {
     subsource = [];
@@ -24,38 +25,34 @@ class SubscriptManager {
         } else {
             this.subSources = this.loadLocalSubscriptions(); // 从本地存储加载订阅源
         }
+
+        this.activeSubsource = [];
+
+        for (let i = 0; i < this.subSources.length; i++) {
+            if (this.subSources[i].subs_type === 'active') {
+                const formatruleBody = subSources[i].form.slice(subSources[i].formatRule.indexOf('{') + 1, subSources[i].formatRule.lastIndexOf('}'));
+                const formatruleFunction = new Function('rawData', formatruleBody);
+
+                this.activeSubsource.push(new ActiveSubsource(
+                    subSources[i].id,
+                    subSources[i].url,
+                    formatruleFunction,
+                    subSources[i].updateInterval)
+                );
+            }
+        }
     }
 
     // 更新主动获取式的订阅源
     async updateActiveSubscribes() {
-        this.subSources.filter(sub => sub.subs_type === 'active')
-            .forEach(sub => {
-                const formatruleBody = sub.form.slice(
-                    sub.formatRule.indexOf('{') + 1,
-                    sub.formatRule.lastIndexOf('}')
-                );
-                const formatruleFunction = new Function('rawData', formatruleBody);
-
-                const activeSubsource = new ActiveSubsource(
-                    sub.id,
-                    sub.url,
-                    formatruleFunction,
-                    sub.updateInterval
-                );
-
-                // 存储更新的数据
-                activeSubsource.fetchData().then(() => {
-                    dataController.addTweet(new Tweet(
-                        -1,
-                        activeSubsource.id,
-                        new Date(),
-                        activeSubsource.url,
-                        activeSubsource.rawData
-                    ))
-                });
+        // 存储更新的数据
+        for (let i = 0; i < this.activeSubsource.length; i++) {
+            this.activeSubsource[i].fetchData().then(() => {
+                dataController.addTweet(new Tweet(-1, activeSubsource[i].id, new Date().getTime(), activeSubsource[i].url, activeSubsource[i].rawData))
             });
-    }
+        }
 
+    }
 
     userLoggedIn() {
         return store.state.auth.isLoggedIn;
@@ -67,5 +64,5 @@ class SubscriptManager {
     }
 }
 
-const subscriptManager = new SubscriptManager(dataController.getJiServerUrl());
+const subscriptManager = new SubscriptManager(store.state.globalRepository.serverUrl);
 export default subscriptManager;

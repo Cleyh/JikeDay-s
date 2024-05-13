@@ -16,7 +16,7 @@ class DataController {
         this.subscribes = reactive([]);
         this.schedules = reactive([]);
         this.tweets = reactive([]);
-        this.setting = reactive({});
+        this.setting = reactive([]);
         this.initializeDB();
         this.loadData();
     }
@@ -46,7 +46,7 @@ class DataController {
         const scheduleMap = await this.db.schedule_list.toArray();
         const setting = await this.db.setting.toArray();
 
-        this.user = reactive(new User(user));
+        //this.user = reactive(new User(user));
         this.subscribes = reactive(subscribeMap.map(data => new Subscribe(
             data.id,
             data.type,
