@@ -74,7 +74,7 @@ export default {
       // this.saveToken(data.token);
 
       // 重定向到另一个页面
-      this.$router.push('/profile');
+      this.$router.push('/');
     },
     handleForgotPassword() {
       // 处理忘记密码的逻辑
