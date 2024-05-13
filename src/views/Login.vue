@@ -40,7 +40,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        let response = await fetch('http://localhost:8088/user/login', {
+        let response = await fetch('http://localhost:8080/user/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -55,6 +55,7 @@ export default {
           this.errorMessage = '登录失败，请检查您的凭据';
         } else {
           let data = await response.json();
+          console.log(data);
           if (data.status === 'success') {
             //  token 的存储和后续操作
             this.handleLoginSuccess(data);
