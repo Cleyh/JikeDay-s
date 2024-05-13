@@ -27,18 +27,41 @@ export default {
     }
   },
   methods: {
-    switchUser() {
-      // 在这里编写切换用户的逻辑，可以调用后端接口获取新用户信息等
-      console.log('Switching user...');
+    switchUser(){
+      let a;
+      a=this.store.state.email
+      alert(a)
     },
-    logout() {
-      // 在这里编写退出登录的逻辑，可以清除用户信息等
-      console.log('Logging out...');
+    async getProfile() {
+      try {
+        const response = await fetch('/user/getProfile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${this.token}`
+          },
+          params: {
+            user: this.userInfo.email // 假设你的 userInfo 对象中包含了用户邮箱
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user profile');
+        }
+        const userData = await response.json();
+        // 更新个人信息
+        this.userInfo.avatarUrl = userData.avatar;
+        this.userInfo.nickname = userData.nickname;
+        this.userInfo.userId = userData.userId;
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
     }
+  },
+  mounted() {
+    this.getProfile();
   }
 };
 </script>
 
 <style scoped>
-
+/* 可以添加样式 */
 </style>
