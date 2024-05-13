@@ -33,24 +33,31 @@ export default {
         method: 'GET'
       })
           .then(response => {
-            if (response.ok) {
-              return response.json(); // 处理响应的JSON数据
+            if (!response.ok) {
+              throw new Error('Network response was not ok.');
             }
-            throw new Error('Network response was not ok.');
+            return response.json(); // 处理响应的JSON数据
           })
-          .then(data => {
+          .then(({ data }) => { // 只提取data字段中的data属性
             console.log(data); // 在这里处理服务器返回的数据
-            // 更新数据属性，以在页面上显示订阅信息
-            this.items = data.map(item => ({
-              id: item.sid,
-              title: item.tittle, // 注意：原数据中标题键是`tittle`，这里做了修正
-              content: item.content,
-              likes: 0, // 默认点赞数
-              comments: 0 // 默认评论数
-            }));
+            // 确保data字段是一个数组
+            if (Array.isArray(data)) {
+              // 更新数据属性，以在页面上显示订阅信息
+              this.items = data.map(item => ({
+                id: item.sid,
+                title: item.tittle, // 注意：原数据中标题键是`tittle`，这里做了修正
+                content: item.content,
+                likes: 0, // 默认点赞数
+                comments: 0 // 默认评论数
+              }));
+            } else {
+              throw new Error('Data is not an array.');
+            }
           })
           .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
+            // 在出现错误时清空数据，以便提供更好的用户体验
+            this.items = [];
           });
     }
   }
