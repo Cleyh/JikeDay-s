@@ -4,13 +4,14 @@
     <input type="text" placeholder="搜索">
     <div class="divider"></div>
     <div class="cards-container">
-      <card v-for="item in items" :key="item.id" :item="item" />
+      <card v-for="item in items" :key="item.id" :item="item"/>
     </div>
   </div>
 </template>
 
 <script>
 import Card from "../components/subsource_Page/Card.vue";
+import globalRepository from "@/store/globalRepository.js";
 
 export default {
   components: {
@@ -28,8 +29,9 @@ export default {
   methods: {
     goToSubscription() {
       // 跳转到订阅源的逻辑
-      this.$router.push({ name: 'subscription' });
-      fetch('http://localhost:8080/getSubsource?page=0&size=4', {
+      this.$router.push({name: 'subscription'});
+      //let url = globalRepository.actions.getJiServerUrl()+"getSubsource?page=0&size=4";
+      fetch("http://localhost:8080/getSubsource?page=0&size=4", {
         method: 'GET'
       })
           .then(response => {
@@ -72,6 +74,7 @@ export default {
   background-color: #E0E0E0; /* 浅灰色分隔线 */
   margin: 20px 0;
 }
+
 .subscriptions {
   /* 这里添加针对订阅源页面的样式 */
   display: flex;
@@ -80,6 +83,7 @@ export default {
   max-width: 100%; /* 限制订阅源容器的最大宽度，您可以根据需要进行调整 */
   margin: auto;
 }
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -87,7 +91,7 @@ export default {
 
   width: 100%;
   max-width: 900px; /* 设置一个最大宽度防止卡片过于分散 */
-  margin:  auto; /* 居中卡片容器 */
+  margin: auto; /* 居中卡片容器 */
 }
 
 </style>

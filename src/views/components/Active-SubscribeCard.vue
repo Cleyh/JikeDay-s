@@ -2,7 +2,7 @@
   <div class="active-subscribe-card">
 
     <div class="header">
-      <h2 class="title">{{ subscribe_message.title }}</h2>
+      <h2 class="title">{{ tweet_message.title }}</h2>
       <p class="subtitle">{{ formattedSummary }}</p>
     </div>
 
@@ -13,7 +13,7 @@
     <div class="footer">
       <div class="subsource-info">
         <i class="icon subsource-icon">💬</i>
-        <span class="push-time">{{ subscribe_message.pushTime }}</span>
+        <span class="push-time">{{ tweet_message.pushTime }}</span>
       </div>
       <i class="icon info-icon">ℹ️</i>
     </div>
@@ -24,17 +24,17 @@
 export default {
   name: 'ActiveSubscribeCard',
   props: {
-    subscribe_message: {
+    tweet_message: {
       type: Object,
       required: true
     }
   },
   computed: {
     formattedSummary() {
-      if (this.subscribe_message.summary.length > 20) {
-        return this.subscribe_message.summary.slice(0, 20) + '...';
+      if (this.tweet_message.summary.length > 20) {
+        return this.tweet_message.summary.slice(0, 20) + '...';
       }
-      return this.subscribe_message.summary;
+      return this.tweet_message.summary;
     }
   }
 

@@ -8,7 +8,6 @@ import './assets/main.css';
 
 // todo 初始化
 
-
 const app = createApp(App);
 app.use(router);
 app.use(store);

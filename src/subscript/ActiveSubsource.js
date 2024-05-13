@@ -3,6 +3,7 @@ import axios from "axios";
 export class ActiveSubsource {
     id: int;
     url: string;
+    // 一个信息处理函数
     formatRule: (data: any) => any;
     updateCycle: string;
 

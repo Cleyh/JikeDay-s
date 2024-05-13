@@ -35,11 +35,14 @@ export class SubscriptManager {
             );
             // 存储更新的数据
             activeSubsource.fetchData().then(() => {
-                localStorage.setItem(
-                    sub.id,
-                    JSON.stringify(activeSubsource.getFormat())
-                );
+                //todo 用indexeddb来存
+
+                // localStorage.setItem(
+                //     sub.id,
+                //     JSON.stringify(activeSubsource.getFormat())
+                // );
             });
+
         });
     }
 
