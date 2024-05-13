@@ -15,12 +15,52 @@
   </div>
 </template>
 
-<script setup>
-import {ref} from 'vue';
+<script>
+import axios from 'axios'; // 导入 Axios
 
-const avatarUrl = ref('src/assets/logo.svg'); // 本地文件路径
-const nickname = ref('test');
-const userId = ref('123456');
+export default {
+  data() {
+    return {
+      avatarUrl: 'src/assets/logo.svg', // 本地文件路径
+      nickname: 'test',
+      userId: '123456'
+    };
+  },
+
+  mounted() {
+    this.getProfile(); // 组件挂载后获取个人信息
+  },
+
+  methods: {
+    // 处理头像更换事件
+    handleAvatarChange(event) {
+      const file = event.target.files[0];
+      // 在这里处理上传的文件，可以将其发送到服务器或者进行其他处理
+      console.log('Selected File:', file);
+    },
+
+    // 获取个人信息
+    async getProfile() {
+      try {
+        const response = await axios.get('/user/getProfile', {
+          headers: {
+            'Authorization': `Bearer ${yourToken}` // 替换为你的 token
+          },
+          params: {
+            user: this.userInfo.email // 传入用户邮箱
+          }
+        });
+        // 更新控件显示用户信息
+        const userData = response.data;
+        this.avatarUrl = userData.avatar;
+        this.nickname = userData.name;
+        this.userId = userData.uid;
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -55,12 +95,3 @@ const userId = ref('123456');
   color: #666;
 }
 </style>
-
-<script>
-// 处理头像更换事件
-const handleAvatarChange = (event) => {
-  const file = event.target.files[0];
-  // 在这里处理上传的文件，可以将其发送到服务器或者进行其他处理
-  console.log('Selected File:', file);
-};
-</script>
