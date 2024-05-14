@@ -2,7 +2,7 @@
   <div class="profile">
     <!-- 引入个人信息卡片 -->
     <div class="profile-card">
-      <ProfileCard :avatarUrl="userInfo.avatarUrl" :nickname="userInfo.nickname" :userId="userInfo.userId" />
+      <ProfileCard :avatarUrl="userInfo.avatarUrl" :nickname="userInfo.nickname" :userId="userInfo.userId"/>
     </div>
     <button @click="switchUser">切换用户</button>
     <button @click="logout">退出登录</button>
@@ -27,20 +27,20 @@ export default {
     }
   },
   methods: {
-    switchUser(){
-      let a;
-      a=this.store.state.email
-      alert(a)
+    switchUser() {
+      console.log(this.$store.state.tokenSave.email); // 正确的访问方式
+      console.log(this.$store.state.tokenSave.token);
     },
     async getProfile() {
       try {
-        const response = await fetch('/user/getProfile', {
+        const email = this.$store.state.tokenSave.email;
+        const token = this.$store.state.tokenSave.token;
+        console.log(token)
+        const urlWithParams = `http://localhost:8080/user/getProfile?user=${encodeURIComponent(email)}`;
+        const response = await fetch(urlWithParams, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${this.token}`
-          },
-          params: {
-            user: this.userInfo.email // 假设你的 userInfo 对象中包含了用户邮箱
+            'Authorization':`${token}`
           }
         });
         if (!response.ok) {
@@ -48,9 +48,10 @@ export default {
         }
         const userData = await response.json();
         // 更新个人信息
-        this.userInfo.avatarUrl = userData.avatar;
-        this.userInfo.nickname = userData.nickname;
-        this.userInfo.userId = userData.userId;
+        // this.userInfo.avatarUrl = userData.avatarUrl;
+        console.log(userData.data.name)
+        this.userInfo.nickname = userData.data.name;
+        this.userInfo.userId = userData.data.uid;
       } catch (error) {
         console.error('Error fetching user profile:', error);
       }
