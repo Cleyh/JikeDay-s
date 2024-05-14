@@ -29,7 +29,7 @@ class DataController {
             user: 'id, username, email, avater, token',
             subscribe_list: 'id, type, name, url, formatRule, updateInterval',
             schedule_list: 'id, title, content, typeData, status, createTime, startTime, endTime',
-            tweet_list: 'id, source, time, title, content',
+            tweet_list: 'id, source, title, content, type, timeSlotA, timeSlotB, timeSlotC',
             setting: 'id, settings, value'
         });
 
@@ -48,7 +48,7 @@ class DataController {
         const setting = await this.db.setting.toArray();
 
         //this.user = reactive(new User(user));
-        this.subscribes = reactive(subscribeMap.map(data => new Subscribe(
+        this.subscribes = new reactive(subscribeMap.map(data => new Subscribe(
             data.id,
             data.type,
             data.name,
@@ -56,14 +56,15 @@ class DataController {
             data.formatRule,
             data.updateInterval))
         );
-        this.tweets = reactive(TweetMap.map(data => new Tweet(
-            data.id,
-            data.source,
-            data.time,
-            data.title,
-            data.content))
+        this.tweets = new reactive(TweetMap.map(data => new Tweet(
+                data.id,
+                data.source,
+                data.time,
+                data.title,
+                data.content
+            ))
         );
-        this.schedules = reactive(scheduleMap.map(data => new Schedule(
+        this.schedules = new reactive(scheduleMap.map(data => new Schedule(
             data.id,
             data.title,
             data.content,
@@ -73,7 +74,7 @@ class DataController {
             data.startTime,
             data.endTime))
         );
-        this.setting = reactive(setting.map(data => new Setting(
+        this.setting = new reactive(setting.map(data => new Setting(
             setting.id,
             setting.settings,
             setting.value))
@@ -82,7 +83,7 @@ class DataController {
 
     async loadSubscribe() {
         const subscribeMap = await this.db.subscribe_list.toArray();
-        this.subscribes = reactive(subscribeMap.map(data => new Subscribe(
+        this.subscribes = new reactive(subscribeMap.map(data => new Subscribe(
             data.id,
             data.type,
             data.name,
@@ -94,7 +95,7 @@ class DataController {
 
     async loadSchedule() {
         const scheduleMap = await this.db.schedule_list.toArray();
-        this.schedules = reactive(scheduleMap.map(data => new Schedule(
+        this.schedules = new reactive(scheduleMap.map(data => new Schedule(
             data.id,
             data.title,
             data.content,
@@ -108,7 +109,7 @@ class DataController {
 
     async loadAllTweet() {
         const TweetMap = await this.db.tweet_list.toArray();
-        this.tweets = reactive(TweetMap.map(data => new Tweet(
+        this.tweets = new reactive(TweetMap.map(data => new Tweet(
             data.id,
             data.source,
             data.time,
@@ -193,16 +194,16 @@ class DataController {
         try {
             await this.db.schedule_list.add(schedule);
             await this.loadSchedule();
-        }catch (error) {
+        } catch (error) {
             console.error('Error adding schedule:', error);
         }
     }
 
     async updateSchedule(schedule) {
-        try{
+        try {
             await this.db.schedule_list.put(schedule);
             await this.loadSchedule();
-        }catch (error) {
+        } catch (error) {
             console.error('Error updating schedule:', error);
         }
     }
@@ -211,13 +212,13 @@ class DataController {
         try {
             await this.db.schedule_list.delete(id);
             await this.loadSchedule();
-        }catch (error) {
+        } catch (error) {
             console.error('Error deleting schedule:', error);
         }
     }
 
     async addTweet(tweet) {
-        this.tweets.push(tweet);
+
         this.db.tweet_list.add(tweet).catch(error => {
             console.error('Error adding tweet to DB:', error);
         });
@@ -245,7 +246,7 @@ class DataController {
         try {
             await this.db.setting_list.put(setting);
             await this.loadSetting();
-        }catch (error) {
+        } catch (error) {
             console.error('Error updating setting:', error);
         }
     }
@@ -254,11 +255,29 @@ class DataController {
         try {
             await this.db.user_list.put(user);
             await this.loadUser();
-        }catch (error) {
+        } catch (error) {
             console.error('Error updating user:', error);
         }
     }
 
+    async refreshTweets() {
+
+    }
+
+    refreshLatestTweets(number, size) {
+
+    }
+
+    addTweetList(tweets_list) {
+        console.log("addTweetList");
+        tweets_list.forEach(tweet => {
+            if (!this.tweets.find(gettweet => gettweet.id === tweet.id)) {
+                this.tweets.push(tweet);
+                this.addTweet(tweet);
+            }
+        });
+        console.log(this.tweets);
+    }
 }
 
 const dataController = new DataController("http://localhost:8080/");

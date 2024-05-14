@@ -11,6 +11,7 @@ import DateCard from '../components/DateCard.vue';
 import ScheduleCard from '../components/ScheduleCard.vue';
 import WaterfallWall from "@/views/components/WaterFallWall.vue";
 import dataController from "@/dataController/DataController.js";
+import tweetsManager from "@/subscript/TweetsManager.js";
 
 export default {
   name: 'Home',
@@ -22,6 +23,8 @@ export default {
   data() {
     return {
       currentDate: new Date(),
+      page: 0,
+      size: 10
     }
   },
   computed: {
@@ -30,9 +33,22 @@ export default {
     }
   },
   created() {
-    dataController.loadAllTweet();
+    tweetsManager.getLatesTweetsFromServer(this.page, this.size);
+    window.addEventListener('scroll', this.handleScroll);
+    this.loadMoreData();
   },
-  methods: {}
+  methods: {
+    loadMoreData() {
+      tweetsManager.getLatesTweetsFromServer(this.page++, this.size);
+    },
+    handleScroll() {
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
+      if (nearBottom) {
+        this.loadMoreData();
+      }
+    }
+  }
+
 }
 </script>
 

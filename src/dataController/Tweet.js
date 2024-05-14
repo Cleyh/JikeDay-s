@@ -1,15 +1,21 @@
-class Tweet {
+export class Tweet {
     id = -1;
     source = -1;
-    time = "";
     title = "";
     content ="";
+    type = "";
+    timeSlotA = "";
+    timeSlotB = "";
+    timeSlotC = "";
 
-    constructor(id: int, source: string, time: string, title: string, content: string) {
+    constructor(id, source, title, content, type, timeSlotA, timeSlotB, timeSlotC) {
         this.id = id;
         this.source = source;
-        this.time = time;
         this.title = title;
         this.content = content;
+        this.type = type;
+        this.timeSlotA = timeSlotA;
+        this.timeSlotB = timeSlotB;
+        this.timeSlotC = timeSlotC;
     }
 }

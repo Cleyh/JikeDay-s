@@ -4,7 +4,8 @@ export class ActiveSubsource {
     id = -1;
     url = "";
     // 一个信息处理函数
-    formatRule = new function(){};
+    formatRule = new function () {
+    };
     updateCycle;
 
     rawData = "";
@@ -17,10 +18,11 @@ export class ActiveSubsource {
     }
 
     // 从 URL 获取数据
-    async fetchData(){
+    async fetchData() {
         try {
-            const response = await axios.get(this.url);
+            const response = await axios.post(this.url, {nums: 187});
             this.rawData = response.data;
+            console.log(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
             this.rawData = null;
@@ -28,12 +30,12 @@ export class ActiveSubsource {
     }
 
     // 返回原始数据
-    getRaw(){
+    getRaw() {
         return this.rawData;
     }
 
     // 返回格式化后的数据
-    getFormat(){
+    getFormat() {
         if (!this.rawData) {
             console.error('No data available. Please fetch data first.');
             return null;
