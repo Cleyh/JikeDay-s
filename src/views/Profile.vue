@@ -29,8 +29,16 @@ export default {
   },
   methods: {
     switchUser() {
-      //console.log(this.$store.state.tokenSave.email); // 正确的访问方式
-      //console.log(this.$store.state.tokenSave.token);
+      this.$store.commit('auth/logout');
+      this.$store.dispatch('setToken', null);
+      this.$store.dispatch('setEmail',null);
+      this.$router.push('/login');
+    },
+    logout(){
+      this.$store.commit('auth/logout');
+      this.$store.dispatch('setToken', null);
+      this.$store.dispatch('setEmail',null);
+      this.$router.push('/');
     },
   },
   mounted() {
