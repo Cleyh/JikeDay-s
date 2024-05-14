@@ -2,20 +2,26 @@
   <div class="bottom-nav">
     <nav class="nav-card">
       <ul>
-        <li @click="goToHomePage">
-          <span v-if="customIcons.home">{{ customIcons.home }}</span>
-          <span v-else>🗓️</span>
-          <span>主页</span>
+        <li>
+          <button @click="goToHomePage" class="nav-button">
+            <span v-if="customIcons.home">{{ customIcons.home }}</span>
+            <span v-else>🗓️</span>
+            <span>主页</span>
+          </button>
         </li>
-        <li @click="goToSubscription">
-          <span v-if="customIcons.subscription">{{ customIcons.subscription }}</span>
-          <span v-else>📰</span>
-          <span>订阅源</span>
+        <li>
+          <button @click="goToSubscription" class="nav-button">
+            <span v-if="customIcons.subscription">{{ customIcons.subscription }}</span>
+            <span v-else>📰</span>
+            <span>订阅源</span>
+          </button>
         </li>
-        <li @click="goToProfile">
-          <span v-if="customIcons.profile">{{ customIcons.profile }}</span>
-          <span v-else>👤</span>
-          <span>个人中心</span>
+        <li>
+          <button @click="goToProfile" class="nav-button">
+            <span v-if="customIcons.profile">{{ customIcons.profile }}</span>
+            <span v-else>👤</span>
+            <span>个人中心</span>
+          </button>
         </li>
       </ul>
     </nav>
@@ -45,19 +51,16 @@ export default {
       // 跳转到个人中心的逻辑
       this.$router.push({ name: 'profile' }); // 通过路由名称导航
     },
-    // ... goTo methods ...
     updateNavWidth() {
-      // 获取父容器的宽度并设置为.nav-card的宽度
       const parentWidth = this.$el.parentElement.offsetWidth;
       const navCard = this.$el.querySelector('.nav-card');
       if (navCard) {
         navCard.style.width = `${parentWidth}px`;
       }
     },
-    // ... other methods ...
   },
   mounted() {
-    this.updateNavWidth();
+    // this.updateNavWidth();
     window.addEventListener('resize', this.updateNavWidth);
   },
   beforeDestroy() {
@@ -65,26 +68,23 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .bottom-nav {
   position: fixed;
-  left: 0;
-  right: 0;
+  left: 30%;
+  right: 30%;
   bottom: 0;
   display: flex;
   justify-content: center;
 }
 
 .nav-card {
-  width: 100vw;
-  max-width: 100%; /* 确保不会超过视口宽度 */
+  width: 100%;
+  max-width: 100%;
   background: white;
   box-shadow: 0 4px 6px rgba(0,0,0,0.5);
   border-radius: 20px 20px 0 0;
   padding: 10px 0;
-  display: flex;
-  justify-content: space-around;
 }
 
 .nav-card ul {
@@ -93,24 +93,38 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: inherit;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0; /* 移除 ul 的默认外边距 */
 }
 
 .nav-card li {
   text-align: center;
-  flex-grow: 1;
-  flex-basis: 0;
 }
 
-.nav-card span {
+.nav-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.nav-button:hover {
+  background-color: #f0f0f0; /* 悬停时的背景色 */
+}
+
+.nav-button:active {
+  background-color: #e0e0e0; /* 按压时的背景色 */
+}
+
+.nav-button span {
   display: block;
   margin-bottom: 5px;
 }
 
-/* 确保SVG图标显示正确 */
-.nav-card span svg {
+.nav-button svg {
   width: 24px;
   height: 24px;
 }
 </style>
+
