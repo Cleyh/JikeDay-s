@@ -42,11 +42,11 @@ export default {
             this.item.formatRule,
             this.item.updateInterval
         ));
-        this.subscribe(email, this.item.id, store.state.token);
+        this.subscribe(this.$store.state.tokenSave.email, this.item.id, this.$store.state.tokenSave.token);
       } else {
         console.log(this.item.id);
         dataController.deleteSubscribe(this.item.id);
-        this.unsubscribe(email, this.item.id , store.state.token);
+        this.unsubscribe(this.$store.state.tokenSave.email, this.item.id , this.$store.state.tokenSave.token);
       }
       //从服务器获取id为xxx的订阅源
 
