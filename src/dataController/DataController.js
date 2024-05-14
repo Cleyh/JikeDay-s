@@ -1,5 +1,6 @@
 import {reactive} from "vue";
 import Dexie from "dexie";
+import {Subscribe} from "@/dataController/Subscribe.js";
 
 class DataController {
 
@@ -181,6 +182,7 @@ class DataController {
     async deleteSubscribe(id) {
         try {
             await this.db.subscribe_list.delete(id);
+
             await this.loadSubscribe(); // 重新加载订阅列表以更新内存中的数据
         } catch (error) {
             console.error('Error deleting subscription:', error);

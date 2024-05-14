@@ -1,9 +1,10 @@
 <template>
   <div class="card">
-    <div class="subscribe-icon">➕</div> <!-- 使用emoji作为图标 -->
+    <div class="subscribe-icon" @click.stop="toggleSubscription">{{ subscribed ? '➖' : '➕' }}</div>
     <h2>{{ item.title }}</h2>
     <p>{{ item.content }}</p>
-    <div class="info-icon">ℹ️</div> <!-- 使用emoji作为图标 -->
+
+    <div class="info-icon">ℹ️</div>
     <div class="likes-comments">
       <span>👍 {{ item.likes }}</span>
       <span>💬 {{ item.comments }}</span>
@@ -12,12 +13,97 @@
 </template>
 
 <script>
+import dataController from "@/dataController/DataController.js";
+import {Subscribe} from "@/dataController/Subscribe.js";
+import store from "@/store/store.js";
 export default {
   props: {
     item: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      subscribed: false,
+    };
+  },
+  methods: {
+    toggleSubscription() {
+      this.subscribed = !this.subscribed;
+      this.$emit('subscriptionToggled', this.item.id, this.subscribed);
+      if (this.subscribed) {
+        console.log(this.item);
+        dataController.addSubscribe(new Subscribe(
+            this.item.id,
+            "active",
+            this.item.title,
+            this.item.url,
+            this.item.formatRule,
+            this.item.updateInterval
+        ));
+        this.subscribe(email, this.item.id, store.state.token);
+      } else {
+        console.log(this.item.id);
+        dataController.deleteSubscribe(this.item.id);
+        this.unsubscribe(email, this.item.id , store.state.token);
+      }
+      //从服务器获取id为xxx的订阅源
 
+
+    },
+    async subscribe(email, subscribeID, token) {
+      try {
+        const response = await fetch('http://localhost:8080/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token // 将 token 添加到请求头中
+          },
+          body: JSON.stringify({
+            user: email,
+            subscribe: subscribeID
+          })
+        });
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message || '订阅失败');
+        }
+
+        console.log('订阅成功');
+      } catch (error) {
+        console.error('订阅失败:', error.message);
+      }
+    },
+    async unsubscribe(email, subscribeID, token) {
+      try {
+        const response = await fetch('http://localhost:8080/unsubscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          },
+          body: JSON.stringify({
+            user: email,
+            subscribe: subscribeID
+          })
+        });
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          // 如果响应不成功，则抛出一个错误
+          throw new Error(responseData.message || '取消订阅失败');
+        }
+
+        // 如果响应成功，则返回响应数据
+        return responseData;
+      } catch (error) {
+        // 捕获网络错误或其他错误
+        console.error('取消订阅时发生错误:', error);
+        throw error;
+      }
     }
   }
 }
