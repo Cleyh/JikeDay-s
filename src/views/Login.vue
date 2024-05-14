@@ -60,7 +60,7 @@ export default {
           console.log(data);
           if (data.status === 'success') {
             //  token 的存储和后续操作
-            this.handleLoginSuccess(data);
+            this.handleLoginSuccess(data.data);
           } else {
             this.errorMessage = data.message || '登录失败，请稍后再试';
           }
@@ -72,7 +72,11 @@ export default {
       }
     },
     handleLoginSuccess(data) {
-      this.$store.dispatch('setToken', data.token);
+      console.log(store.state.token);
+      this.$store.dispatch('setToken', data);
+      this.$store.dispatch('setEmail',this.email);
+      // this.$store.commit('tokenSave/SET_TOKEN');
+      // this.$store.commit('tokenSave/SET_EMAIL');
       this.$store.commit('auth/login');
       this.$router.push('/profile');
     },
