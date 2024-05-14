@@ -10,6 +10,7 @@
 import DateCard from '../components/DateCard.vue';
 import ScheduleCard from '../components/ScheduleCard.vue';
 import WaterfallWall from "@/views/components/WaterFallWall.vue";
+import dataController from "@/dataController/DataController.js";
 
 export default {
   name: 'Home',
@@ -20,20 +21,19 @@ export default {
   },
   data() {
     return {
-      cards: [
-        {
-          id: 1, type: 'schedule', data: {}
-        },
-        {
-          id: 2, type: 'schedule', data: {}
-        },
-        {
-          id: 3, type: 'active-subscribe', data: {}
-        },
-      ]
+      currentDate: new Date(),
     }
-  }
-};
+  },
+  computed: {
+    cards() {
+      return dataController.tweets;
+    }
+  },
+  created() {
+    dataController.loadAllTweet();
+  },
+  methods: {}
+}
 </script>
 
 <style>
