@@ -72,7 +72,8 @@ export default {
       }
     },
     handleLoginSuccess(data) {
-      console.log(store.state.token);
+      //console.log(store.state.token);
+      /*console.log(data);*/
       this.$store.dispatch('setToken', data);
       this.$store.dispatch('setEmail',this.email);
       // this.$store.commit('tokenSave/SET_TOKEN');
