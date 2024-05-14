@@ -2,18 +2,18 @@
   <div class="active-subscribe-card">
 
     <div class="header">
-      <h2 class="title">{{ tweet_message.title }}</h2>
+      <h2 class="title">{{ this.tweet_message.title }}</h2>
       <p class="subtitle">{{ formattedSummary }}</p>
     </div>
 
     <div class="content">
-      <p class="summary">{{ formattedSummary }}</p>
+      <p class="summary" v-html="this.tweet_message.content"></p>
     </div>
 
     <div class="footer">
       <div class="subsource-info">
         <i class="icon subsource-icon">💬</i>
-        <span class="push-time">{{ tweet_message.pushTime }}</span>
+        <span class="push-time">{{ this.tweet_message.timeSlotA }}</span>
       </div>
       <i class="icon info-icon">ℹ️</i>
     </div>
@@ -29,12 +29,19 @@ export default {
       required: true
     }
   },
+  created() {
+    console.log("test3");
+    console.log(this.tweet_message);
+  },
   computed: {
     formattedSummary() {
-      if (this.tweet_message.summary.length > 20) {
-        return this.tweet_message.summary.slice(0, 20) + '...';
+      console.log("test4");
+      console.log(this.tweet_message);
+
+      if (this.tweet_message.content.length > 20) {
+        return this.tweet_message.content.slice(0, 20) + '...';
       }
-      return this.tweet_message.summary;
+      return this.tweet_message.content;
     }
   }
 

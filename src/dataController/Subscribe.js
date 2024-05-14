@@ -1,11 +1,11 @@
 class Subscribe {
-    id: int;
-    subs_type: string;
-    name: string;
-    url: string;
-    formatRule: string;
-    updateInterval: string;
-    constructor(id: int, type: string, name: string, url: string, formatRule: string, updateInterval: string) {
+    id;
+    subs_type;
+    name;
+    url;
+    formatRule;
+    updateInterval;
+    constructor(id, type, name, url, formatRule, updateInterval) {
         this.id = id;
         this.subs_type = type;
         this.name = name;

@@ -1,11 +1,12 @@
 <template>
-  <div class = "waterfall-wall">
+  <div class="waterfall-wall">
     <!-- 动态渲染卡片组件 -->
     <component
-        v-for="card in sortedCards"
-        :key="card.id"
-        :is="getComponent(card.type)"
-        :data="card.data"
+        v-for="tweet in sortedCards"
+        :key="tweet.id"
+        :is="getComponent(tweet)"
+        v-bind="tweet"
+        :tweet_message = "tweet"
     />
   </div>
 </template>
@@ -17,6 +18,10 @@ import ScheduleCard from './ScheduleCard.vue';
 
 export default {
   name: 'WaterfallWall',
+  components:{
+    ActiveSubscribeCard,
+    ScheduleCard,
+  },
   props: {
     cards: {
       type: Array,
@@ -26,17 +31,23 @@ export default {
   computed: {
     // 按时间排序卡片
     sortedCards() {
-      return this.cards.sort((a, b) => new Date(a.data.time) - new Date(b.data.time));
+      //return this.cards.sort((a, b) => new Date(a.data.time) - new Date(b.data.time));
+      console.log("test2");
+      console.log(this.cards);
+      return this.cards;
     }
   },
   methods: {
     // 根据卡片类型返回相应的组件
     getComponent(type) {
+      console.log("type:");
+      console.log(type);
       const mapping = {
         'active-subscribe': ActiveSubscribeCard,
         'schedule': ScheduleCard
       };
-      return mapping[type] || null;
+      //return mapping[type] || null;
+      return ActiveSubscribeCard;
     }
   }
 }

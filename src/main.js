@@ -16,5 +16,9 @@ app.use(store);
 
 app.mount('#app');
 
-dataController.initializeDB();
-subscriptManager.loadSubsource().then(subscriptManager.updateActiveSubscribes());
+store.state.globalRepository.serverUrl = "http://localhost:8080";
+
+//dataController.initializeDB();
+subscriptManager.loadSubsource().then(r => {
+
+});
