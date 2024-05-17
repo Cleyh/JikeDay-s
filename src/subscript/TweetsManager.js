@@ -4,12 +4,16 @@ import dataController from "@/dataController/DataController.js";
 import {Tweet} from "@/dataController/Tweet.js";
 
 class TweetsManager {
-    async getLatesTweetsFromServer(page, size) {
+
+    page = 0;
+    size = 10;
+
+    async getLatesTweetsFromServer() {
         console.log("getLatesTweetsFromServer");
         let response = await axios.get(
             `http://localhost:8080/getLatestTweets?user=` + `123`
-            + `&page=` + page.toString()
-            + `&size=` + size.toString()
+            + `&page=` + this.page.toString()
+            + `&size=` + this.size.toString()
         );
         console.log(response.data);
         let tweets = [];
@@ -18,6 +22,7 @@ class TweetsManager {
                 item.tid,
                 item.sid,
                 item.title,
+                item.summary,
                 item.content,
                 item.type,
                 item.timeSlotA,

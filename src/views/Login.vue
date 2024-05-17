@@ -22,8 +22,8 @@
       </form>
     </div>
     <div class="login-footer">
-      <router-link to="/signup" class="link">注册</router-link> |
-      <a href="#" class="link" @click.prevent="handleForgotPassword">忘记密码</a>
+      <router-link to="/signup" class="link">注册</router-link>
+
     </div>
   </div>
 </template>

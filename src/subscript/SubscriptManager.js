@@ -1,9 +1,6 @@
-// src/services/RuleManager.js
-import {ActiveSubsource} from "@/subscript/ActiveSubsource.js";
 import store from "@/store/store.js";
 import dataController from "@/dataController/DataController.js";
 import axios from "axios";
-import {reactive} from "vue";
 
 class SubscriptManager {
     subsource = [];

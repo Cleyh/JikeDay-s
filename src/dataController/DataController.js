@@ -29,7 +29,7 @@ class DataController {
             user: 'id, username, email, avater, token',
             subscribe_list: 'id, type, name, url, formatRule, updateInterval',
             schedule_list: 'id, title, content, typeData, status, createTime, startTime, endTime',
-            tweet_list: 'id, source, title, content, type, timeSlotA, timeSlotB, timeSlotC',
+            tweet_list: 'id, source, title, summary, content, type, timeSlotA, timeSlotB, timeSlotC',
             setting: 'id, settings, value'
         });
 
@@ -59,9 +59,13 @@ class DataController {
         this.tweets = new reactive(TweetMap.map(data => new Tweet(
                 data.id,
                 data.source,
-                data.time,
                 data.title,
-                data.content
+                data.summary,
+                data.content,
+                data.type,
+                data.timeSlotA,
+                data.timeSlotB,
+                data.timeSlotC
             ))
         );
         this.schedules = new reactive(scheduleMap.map(data => new Schedule(

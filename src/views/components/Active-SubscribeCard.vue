@@ -1,23 +1,21 @@
 <template>
-  <div class="active-subscribe-card">
-
+  <button class="active-subscribe-card" @click="handleCardClick">
     <div class="header">
-      <h2 class="title">{{ this.tweet_message.title }}</h2>
-      <p class="subtitle">{{ formattedSummary }}</p>
+      <h1 class="title">{{ this.tweet_message.title }}</h1>
+      <p class="subtitle">{{ this.formattedSummary }}</p>
     </div>
 
     <div class="content">
-      <p class="summary" v-html="this.tweet_message.content"></p>
+      <p class="summary">{{ this.formattedSummary }}</p>
     </div>
 
     <div class="footer">
       <div class="subsource-info">
-        <i class="icon subsource-icon">💬</i>
         <span class="push-time">{{ this.tweet_message.timeSlotA }}</span>
       </div>
-      <i class="icon info-icon">ℹ️</i>
+      <n-icon class="icon info-icon" :component="MessageRound"></n-icon>
     </div>
-  </div>
+  </button>
 </template>
 
 <script>
@@ -29,19 +27,22 @@ export default {
       required: true
     }
   },
-  created() {
-    console.log("test3");
-    console.log(this.tweet_message);
+  data() {
+    return {
+      isShowDetails: false
+    };
   },
-  computed: {
+  methods: {
     formattedSummary() {
-      console.log("test4");
-      console.log(this.tweet_message);
-
-      if (this.tweet_message.content.length > 20) {
+      if (this.tweet_message.summary !== null) {
+        return this.tweet_message.summary;
+      } else {
         return this.tweet_message.content.slice(0, 20) + '...';
       }
-      return this.tweet_message.content;
+    },
+    handleCardClick() {
+      this.$emit('cardClick', this.tweet_message);
+      //this.isShowDetails = !this.isShowDetails;
     }
   }
 
@@ -51,10 +52,15 @@ export default {
 <style scoped>
 .active-subscribe-card {
   padding: 16px;
-  background: var(--color-background);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   margin-bottom: 16px; /* 与下一个卡片的间距 */
+}
+
+.active-subscribe-card:hover {
+  background-color: rgba(229, 229, 229, 0.8);
 }
 
 .header {

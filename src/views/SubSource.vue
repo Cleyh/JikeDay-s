@@ -2,7 +2,7 @@
   <div class="subscriptions">
     <h1>订阅源</h1>
     <input type="text" placeholder="搜索">
-    <div class="divider"></div>
+    <n-divider/>
     <div class="cards-container">
       <card v-for="item in items" :key="item.id" :item="item" @subscriptionToggled="handleSubscriptionToggle"/>
     </div>

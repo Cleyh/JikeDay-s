@@ -38,7 +38,7 @@ export default {
       this.$store.commit('auth/logout');
       this.$store.dispatch('setToken', null);
       this.$store.dispatch('setEmail',null);
-      this.$router.push('/');
+      this.$router.push('/home');
     },
   },
   mounted() {

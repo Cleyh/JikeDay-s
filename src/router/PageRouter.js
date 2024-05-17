@@ -5,6 +5,7 @@ import ProfilePage from '@/views/Profile.vue';
 import Login from "@/views/Login.vue";
 import store from "@/store/store.js";
 import Signup from '@/views/Signup.vue'
+import PassageView from "@/views/PassageView.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -22,20 +23,26 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomePage,
-           // meta: { requiresAuth: false }
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: HomePage,
+            meta: { requiresAuth: true }
         },
         {
             path: '/subscription',
             name: 'subscription',
             component: SubscriptionPage,
-           // meta: { requiresAuth: false }
+            meta: { requiresAuth: true }
         },
         {
             path: '/profile',
             name: 'profile',
             component: ProfilePage,
             meta: { requiresAuth: true }
-        },
+        }
     ],
 });
 
